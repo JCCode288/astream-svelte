@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { IMainPage } from "$lib/interfaces/provider.interface";
+	import { Button } from "flowbite-svelte";
 	import { handleUpdate } from "../utils/data.update";
 	import AniCard from "./AniCard.svelte";
 	import EpsCard from "./EpsCard.svelte";
@@ -69,27 +70,28 @@
 
 <svelte:head>
 	<title>Astreamline - streaming online</title>
+	<meta name="description" content="Streaming anime online with no ads" />
+	<meta name="keywords" content="Anime, Streaming, Online, No Ads" />
 </svelte:head>
 
-<h1>Main Page</h1>
-<div>
-	<h2>Recent</h2>
+<div class="flex flex-col w-screen">
+	<h2 class="text-4xl font-bold text-red-700">Recent</h2>
 	<div>Page: {$recent_page}</div>
-	<div>
+	<div class="flex flex-wrap gap-y-8 gap-x-4">
 		{#each $recent.results as anime}
 			<EpsCard {anime} />
 		{/each}
 	</div>
 	<div>
 		{#if $recent_page > 1}
-			<button on:click={() => handlePrevRecent()}>Prev Page</button>
+			<Button on:click={() => handlePrevRecent()}>Prev Page</Button>
 		{/if}
 		{#if $recent.hasNextPage}
 			<button on:click={() => handleNextRecent()}>Next Page</button>
 		{/if}
 	</div>
 </div>
-<div>
+<div class="flex flex-col w-screen">
 	<h2>Top</h2>
 	<div>Page: {$top_page}</div>
 	<div>
@@ -106,7 +108,7 @@
 		{/if}
 	</div>
 </div>
-<div>
+<div class="flex flex-col w-screen">
 	<h2>Popular</h2>
 	<div>Page: {$popular_page}</div>
 	<div>
@@ -123,7 +125,7 @@
 		{/if}
 	</div>
 </div>
-<div>
+<div class="flex flex-col w-screen">
 	<h2>Movies</h2>
 	<div>Page: {$movies_page}</div>
 	<div>
