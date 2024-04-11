@@ -34,7 +34,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 			this.provider.fetchEpisodeSources(episodeId),
 			this.provider.fetchAnimeInfo(animeId)
 		]);
-		const stream: IStream = { ...source, animeId: anime.id };
+		const stream: IStream = { ...source, anime, curEps: epsNum };
 
 		const epsIdx = epsNum ? anime.episodes?.findIndex((anime) => anime.number === epsNum) : 0;
 
