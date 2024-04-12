@@ -18,7 +18,7 @@
 	};
 </script>
 
-<div class="flex flex-col w-screen">
+<div class="flex flex-col relative">
 	<h2 class="text-4xl font-bold text-red-700">Recent</h2>
 	<div class="flex flex-wrap gap-y-8 gap-x-4">
 		{#each $recent.results as anime}

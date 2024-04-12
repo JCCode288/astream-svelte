@@ -18,7 +18,7 @@
 	};
 </script>
 
-<div class="flex flex-col w-screen">
+<div class="flex flex-col relative">
 	<h2 class="text-4xl font-bold text-red-700">Movies</h2>
 	<div>
 		{#each $movies.results as anime}
