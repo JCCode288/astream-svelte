@@ -7,6 +7,7 @@ export interface IProviderStrategy {
 	recent(page?: number): Promise<ISearch<IAnimeResult>>;
 	top(page?: number): Promise<ISearch<IAnimeResult>>;
 	popular(page?: number): Promise<ISearch<IAnimeResult>>;
+	movies(page?: number): Promise<ISearch<IAnimeResult>>;
 	detail(animeId: string, page?: number): Promise<IAnimeInfo>;
 	search(query: string, page?: number): Promise<ISearch<IAnimeResult>>;
 	allGenres(): Promise<IGenreAnime[]>;
