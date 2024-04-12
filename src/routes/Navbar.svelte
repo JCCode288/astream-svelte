@@ -3,6 +3,7 @@
 	import { SearchOutline } from "flowbite-svelte-icons";
 	import { debounce } from "../utils/debouncer";
 	import { goto } from "$app/navigation";
+	import Logo from "$lib/main-logo.svelte";
 
 	const debouncer = debounce(1200);
 
@@ -22,15 +23,8 @@
 </script>
 
 <Navbar>
-	<NavBrand href="/">
-		<img
-			src="/images/flowbite-svelte-icon-logo.svg"
-			class="me-3 h-6 sm:h-9"
-			alt="Astreamline Logo"
-		/>
-		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
-			>Astreamline</span
-		>
+	<NavBrand href="/" class="flex flex-col gap-1">
+		<Logo sizeLogo="70" />
 	</NavBrand>
 	<div class="flex md:order-2">
 		<Button

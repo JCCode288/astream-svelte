@@ -3,7 +3,6 @@
 	import { Card, GradientButton, Img } from "flowbite-svelte";
 
 	export let anime: IAnimeResult;
-	const detailUrl = `detail/${anime.id}`;
 </script>
 
 <Card padding="none" size="sm" class="bg-secondary-100 rounded-md">
@@ -24,7 +23,7 @@
 			class="flex justify-center items-center mt-1 ease-in-out duration-500 text-lg"
 			outline
 			color="pinkToOrange"
-			href={detailUrl}>Detail</GradientButton
+			href={`detail/${anime.id}`}>Detail</GradientButton
 		>
 	</div>
 </Card>

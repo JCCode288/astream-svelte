@@ -3,8 +3,6 @@
 	import { Card, GradientButton } from "flowbite-svelte";
 
 	export let anime: IAnimeResult;
-	const streamUrl = `stream/${btoa(anime.id + "-episode-" + anime.episodeNumber)}`;
-	const cardTitle = `${anime.title.toString()} - ${anime.episodeNumber}`;
 </script>
 
 <Card padding="none" size="sm" class="bg-secondary-200 rounded-md">
@@ -13,13 +11,13 @@
 			<img
 				class="rounded-lg justify-self-center items-center"
 				src={anime.cover ?? anime.image}
-				alt={cardTitle}
+				alt={`${anime.title.toString()} - ${anime.episodeNumber}`}
 			/>
 		</a>
 		<h4
 			class="text-xl font-semibold tracking-tight text-gray-900 dark:text-secondary-300 text-center whitespace-pre-wrap mb-1"
 		>
-			{cardTitle}
+			{`${anime.title.toString()} - ${anime.episodeNumber}`}
 		</h4>
 	</div>
 
@@ -28,7 +26,8 @@
 			class="flex justify-center items-center mt-1 ease-in-out duration-500 text-lg"
 			outline
 			color="pinkToOrange"
-			href={streamUrl}>Watch Now</GradientButton
+			href={`stream/${btoa(anime.id + "-episode-" + anime.episodeNumber)}`}
+			>Watch Now</GradientButton
 		>
 	</div>
 </Card>
