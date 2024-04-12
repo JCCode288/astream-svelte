@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from "svelte";
 	import { browser } from "$app/environment"; // Import browser environment variable
 	import { generateOpts } from "../../../utils/video-player..config";
-	import type Artplayer from "artplayer";
+	import Artplayer from "artplayer";
 	import type { IGenerateOpts } from "$lib/interfaces/video.interface";
 
 	export let sourcesData: Omit<IGenerateOpts, "div">;
@@ -14,7 +14,7 @@
 		if (browser) {
 			const config = generateOpts({ ...sourcesData, div: streamDiv });
 			// Import Artplayer only on the client-side
-			const Artplayer = await import("artplayer").then((module) => module.default);
+			Artplayer.MOBILE_CLICK_PLAY = true;
 			art = new Artplayer({ ...config });
 
 			art.on("resize", () => {
@@ -23,18 +23,23 @@
 				});
 			});
 
-			art.on("subtitleUpdate", (text) => {
+			art.on("subtitleUpdate", (text: string) => {
 				art.template.$subtitle.innerHTML = text;
 			});
 
 			art.on("destroy", () => {
 				art.hls.destroy();
 			});
+
+			art.on("ready", () => {
+				streamDiv.scrollTo({ behavior: "smooth" });
+			});
 		}
 	});
 
 	onDestroy(() => {
 		if (art && art.hls) {
+			art.destroy(true);
 			art.hls.destroy();
 		}
 	});
