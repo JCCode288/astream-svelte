@@ -1,5 +1,6 @@
 import { Provider } from "$lib";
 import type { IVideoQuality } from "$lib/interfaces/video.interface.js";
+import { error } from "@sveltejs/kit";
 import type { IError } from "../../../interfaces/error.interface.js";
 
 export async function load({ params }) {
@@ -12,7 +13,7 @@ export async function load({ params }) {
 			if (!id) throw new Error("No id provided");
 
 			const streamData = await Provider.stream(atob(id));
-			const { headers, sources, animeId, prev, next, subtitles } = streamData;
+			const { headers, sources, anime, prev, next, subtitles, curEps } = streamData;
 
 			if (!sources || !sources.length) throw new Error("No stream data");
 
@@ -35,10 +36,11 @@ export async function load({ params }) {
 			data = {
 				headers,
 				sources,
-				animeId,
 				prev,
+				anime,
 				next,
 				subtitles,
+				curEps,
 				sourcesData: {
 					currentSource,
 					qualities,
@@ -54,6 +56,6 @@ export async function load({ params }) {
 		}
 		count++;
 	}
-	if (!data) throw new Error("No data");
+	if (!data) error(503, "Something happened");
 	return data;
 }

@@ -1,7 +1,14 @@
-import type { IAnimeEpisode, IAnimeResult, ISearch, ISource } from "@consumet/extensions";
+import type {
+	IAnimeEpisode,
+	IAnimeInfo,
+	IAnimeResult,
+	ISearch,
+	ISource
+} from "@consumet/extensions";
 
 export interface IStream extends ISource {
-	animeId: string;
+	anime: IAnimeInfo;
+	curEps: number | null;
 	prev?: IAnimeEpisode;
 	next?: IAnimeEpisode;
 }
