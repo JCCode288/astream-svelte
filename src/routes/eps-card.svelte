@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { IAnimeResult } from "@consumet/extensions";
 	import { Card, GradientButton } from "flowbite-svelte";
+	import { titleShorten } from "../utils/title.shortener";
 
 	export let anime: IAnimeResult;
 
@@ -9,23 +10,24 @@
 	$: detailUrl = "/detail/" + anime.id;
 </script>
 
-<Card padding="none" size="sm" class="justify-between rounded-md bg-secondary-200">
-	<div class="flex w-full flex-col gap-4">
-		<a href={detailUrl} class="flex flex-col justify-center gap-3 px-5 align-middle">
-			<img
-				class="items-center justify-self-center rounded-lg"
-				src={anime.cover ?? anime.image}
-				alt={animeTitle}
+<Card padding="none" size="xs" class="flex h-[47vh] justify-between rounded-md bg-secondary-200">
+	<div class="flex flex-col justify-center gap-3 px-5 py-2 align-middle">
+		<a href={detailUrl}>
+			<div
+				class="relative flex h-[25vh] w-auto rounded-sm bg-cover bg-center"
+				style="background-image: url('{anime?.cover ?? anime.image}')"
 			/>
 		</a>
-		<h4
-			class="mb-1 whitespace-pre-wrap text-center text-xl font-semibold tracking-tight text-gray-900 dark:text-secondary-300"
-		>
-			{`${anime.title.toString()} - ${anime.episodeNumber}`}
-		</h4>
+		<a href={detailUrl}>
+			<h4
+				class="whitespace-break-spaces pb-1 text-center text-xl font-semibold tracking-tight text-gray-900"
+			>
+				{titleShorten(animeTitle)}
+			</h4>
+		</a>
 	</div>
 
-	<div class="mx-auto my-8 w-[80%]">
+	<div class="mx-auto mb-4 w-[80%]">
 		<GradientButton
 			class="mt-1 flex items-center justify-center text-lg duration-500 ease-in-out"
 			outline

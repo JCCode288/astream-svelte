@@ -1,14 +1,14 @@
 <script lang="ts">
 	import type { IMainPage } from "$lib/interfaces/provider.interface";
-	import { Button } from "flowbite-svelte";
-	import { handleUpdate } from "../utils/data.update";
-	import AniCard from "./ani-card.svelte";
-	import EpsCard from "./eps-card.svelte";
 	import { writable } from "svelte/store";
 	import RecentSection from "./recent-section.svelte";
 	import TopSection from "./top-section.svelte";
 	import PopularSection from "./popular-section.svelte";
 	import MoviesSection from "./movies-section.svelte";
+	import { onMount } from "svelte";
+	import Swiper from "swiper";
+	import { Keyboard, Mousewheel, Navigation, Pagination, Scrollbar } from "swiper/modules";
+	import { VERTICAL_CONFIG } from "$lib/swiper.config";
 
 	export let data: IMainPage;
 
@@ -38,6 +38,9 @@
 	}
 
 	//page handlers
+	onMount(() => {
+		var vertical_swiper = new Swiper(".verSwiper", VERTICAL_CONFIG);
+	});
 </script>
 
 <svelte:head>
@@ -46,10 +49,20 @@
 	<meta name="keywords" content="Anime, Streaming, Online, No Ads" />
 </svelte:head>
 
-<RecentSection {recent} {recent_page} />
-
-<TopSection {top} {top_page} />
-
-<PopularSection {popular} {popular_page} />
-
-<MoviesSection {movies} {movies_page} />
+<div class="verSwiper max-h-[90vh] overflow-hidden">
+	<div class="swiper-wrapper">
+		<div class="swiper-slide">
+			<RecentSection {recent} {recent_page} />
+		</div>
+		<div class="swiper-slide">
+			<TopSection {top} {top_page} />
+		</div>
+		<div class="swiper-slide">
+			<PopularSection {popular} {popular_page} />
+		</div>
+		<div class="swiper-slide">
+			<MoviesSection {movies} {movies_page} />
+		</div>
+	</div>
+	<div class="swiper-pagination-vertical" />
+</div>
