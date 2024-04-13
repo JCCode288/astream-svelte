@@ -1,6 +1,6 @@
 export const debounce = (timeout: number) => {
 	let data: unknown;
-	let id: number | undefined;
+	let id: NodeJS.Timeout | undefined;
 
 	return <T>(fn: () => T) => {
 		if (id) clearTimeout(id);
