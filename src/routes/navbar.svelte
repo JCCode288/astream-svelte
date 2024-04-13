@@ -15,8 +15,6 @@
 			debouncer(() => {
 				const value = (e.target as HTMLInputElement)?.value;
 
-				if (!value || !value.length) return goto("/");
-
 				return goto("/search?q=" + value, { keepFocus: true });
 			});
 
