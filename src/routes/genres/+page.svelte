@@ -4,6 +4,6 @@
 
 <h1>All Genres</h1>
 
-<div>
+<div class="relative flex flex-col">
 	{JSON.stringify(data)}
 </div>

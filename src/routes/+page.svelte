@@ -2,8 +2,8 @@
 	import type { IMainPage } from "$lib/interfaces/provider.interface";
 	import { Button } from "flowbite-svelte";
 	import { handleUpdate } from "../utils/data.update";
-	import AniCard from "./AniCard.svelte";
-	import EpsCard from "./EpsCard.svelte";
+	import AniCard from "./ani-card.svelte";
+	import EpsCard from "./eps-card.svelte";
 	import { writable } from "svelte/store";
 	import RecentSection from "./recent-section.svelte";
 	import TopSection from "./top-section.svelte";

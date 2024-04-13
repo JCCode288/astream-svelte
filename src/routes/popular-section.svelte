@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from "flowbite-svelte";
-	import AniCard from "./AniCard.svelte";
+	import AniCard from "./ani-card.svelte";
 	import { handleUpdate } from "../utils/data.update";
 	import type { IAnimeResult, ISearch } from "@consumet/extensions";
 	import type { Writable } from "svelte/store";

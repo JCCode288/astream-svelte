@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from "flowbite-svelte";
-	import EpsCard from "./EpsCard.svelte";
+	import EpsCard from "./eps-card.svelte";
 	import type { IAnimeResult, ISearch } from "@consumet/extensions";
 	import type { Writable } from "svelte/store";
 	import { handleUpdate } from "../utils/data.update";
