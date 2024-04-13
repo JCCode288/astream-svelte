@@ -1,5 +1,9 @@
 <script>
+	import Navbar from "./navbar.svelte";
 	import "../app.pcss";
 </script>
 
-<slot />
+<div class="h-screen max-w-[100%] overflow-x-hidden">
+	<slot />
+</div>
+<Navbar />

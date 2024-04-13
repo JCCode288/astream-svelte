@@ -65,5 +65,5 @@ export interface IGenerateOpts {
 	currentSource: IVideo | undefined;
 	qualities: IVideoQuality[];
 	currentSubs?: string | undefined;
-	div: HTMLDivElement;
+	div?: HTMLDivElement;
 }

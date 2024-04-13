@@ -4,6 +4,7 @@
 	import { generateOpts } from "../../../utils/video-player..config";
 	import Artplayer from "artplayer";
 	import type { IGenerateOpts } from "$lib/interfaces/video.interface";
+	import { Video } from "flowbite-svelte";
 
 	export let sourcesData: Omit<IGenerateOpts, "div">;
 
@@ -12,7 +13,7 @@
 
 	onMount(async () => {
 		if (browser) {
-			const config = generateOpts({ ...sourcesData, div: streamDiv });
+			const config = generateOpts({ ...sourcesData });
 			// Import Artplayer only on the client-side
 			Artplayer.MOBILE_CLICK_PLAY = true;
 			art = new Artplayer({ ...config });
@@ -47,6 +48,6 @@
 
 <div
 	bind:this={streamDiv}
-	class="artplayer-app"
+	class="artplayer-app rounded-sm bg-blend-screen shadow-sm ring-2 ring-offset-[2.5rem]"
 	style="aspect-ratio: 16/9;width: 85%;height: auto;margin-left: auto;margin-right: auto;"
-></div>
+/>

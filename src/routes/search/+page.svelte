@@ -2,8 +2,7 @@
 	export let data;
 </script>
 
-<h1>All Genres</h1>
-
-<div class="relative flex flex-col">
+<h1>Search Page</h1>
+<div>
 	{JSON.stringify(data)}
 </div>
