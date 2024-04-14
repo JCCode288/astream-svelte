@@ -33,11 +33,11 @@
 </script>
 
 <svelte:head>
-	<title>Streaming Anime - {data.anime.title} Episode {data.curEps}</title>
+	<title>Streaming Anime - {data.anime.title.toString()} Episode {data.curEps?.toString()}</title>
 	<meta name="description" content={data.anime.description} />
 	<meta
 		name="keywords"
-		content={`Streaming Online, ${data.anime.title} Episode ${data.curEps}, No Ads`}
+		content={`streaming online, ${data.anime.title.toString().toLowerCase()} episode ${data.curEps?.toString()}, no ads, watch`}
 	/>
 </svelte:head>
 
