@@ -13,7 +13,7 @@ export async function load({ params }) {
 			if (!id) throw new Error("No id provided");
 
 			const streamData = await Provider.stream(atob(id));
-			const { headers, sources, anime, prev, next, subtitles, curEps } = streamData;
+			const { sources, anime, prev, next, subtitles, curEps } = streamData;
 
 			if (!sources || !sources.length) throw new Error("No stream data");
 
@@ -34,8 +34,6 @@ export async function load({ params }) {
 			const currentSubs = subtitles?.find((sub) => sub.lang === "english")?.url;
 
 			data = {
-				headers,
-				sources,
 				prev,
 				anime,
 				next,

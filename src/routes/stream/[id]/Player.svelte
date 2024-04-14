@@ -48,6 +48,6 @@
 
 <div
 	bind:this={streamDiv}
-	class="artplayer-app rounded-sm bg-blend-screen shadow-sm ring-2 ring-offset-[2.5rem]"
-	style="aspect-ratio: 16/9;width: 85%;height: auto;margin-left: auto;margin-right: auto;"
+	class="artplayer-app my-8 rounded-sm bg-blend-screen shadow-sm ring-2 ring-offset-[2.5rem]"
+	style="aspect-ratio: 16 / 9;"
 />
