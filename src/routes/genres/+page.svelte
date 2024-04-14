@@ -6,6 +6,12 @@
 	$: genres = data.genres;
 </script>
 
+<svelte:head>
+	<title>Anime Genres</title>
+	<meta name="description" content="All list of anime genres in Astreamline website" />
+	<meta name="keywords" content="animes, genres, all genres" />
+</svelte:head>
+
 <div class="flex max-h-full flex-col">
 	<h1>All Genres</h1>
 
