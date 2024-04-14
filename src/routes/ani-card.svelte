@@ -9,11 +9,11 @@
 	$: animeTitle = anime.title.toString();
 </script>
 
-<Card padding="none" size="xs" class="flex h-[47ssvh] justify-between rounded-md bg-secondary-200">
+<Card padding="none" size="xs" class="flex h-[47svh] justify-between rounded-md bg-secondary-200">
 	<div class="flex flex-col justify-center gap-3 px-5 py-2 align-middle">
 		<a href={detailUrl}>
 			<div
-				class="relative flex h-[25ssvh] w-auto rounded-sm bg-cover bg-center"
+				class="relative flex h-[25svh] w-auto rounded-sm bg-cover bg-center"
 				style="background-image: url('{anime?.cover ?? anime.image}')"
 			/>
 		</a>
