@@ -34,8 +34,9 @@ export const HORIZONTAL_CONFIG: SwiperOptions = {
 	modules: [Navigation, Mousewheel, Keyboard],
 
 	navigation: {
-		nextEl: ".swiper-button-next",
-		prevEl: ".swiper-button-prev"
+		nextEl: ".swiper-button-next-hor",
+		prevEl: ".swiper-button-prev-hor",
+		enabled: true
 	},
 	parallax: true
 };
@@ -49,11 +50,11 @@ export const VERTICAL_CONFIG: SwiperOptions = {
 	pagination: {
 		el: ".swiper-pagination-vertical",
 		clickable: true,
-		type: "progressbar"
+		type: "fraction"
 	},
 	navigation: {
-		nextEl: ".swiper-button-next",
-		prevEl: ".swiper-button-prev"
+		nextEl: ".swiper-button-next-ver",
+		prevEl: ".swiper-button-prev-ver"
 	},
 	parallax: true
 };
