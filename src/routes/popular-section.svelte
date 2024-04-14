@@ -19,7 +19,6 @@
 			((document.querySelector("." + swiperClass.POPULAR) as any)?.swiper as Swiper).slideTo(0);
 		}
 	};
-
 	const handleNextPopular = async () => {
 		loading = true;
 		popular_page.update((val) => val + 1);
