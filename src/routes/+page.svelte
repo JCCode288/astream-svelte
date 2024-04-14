@@ -49,7 +49,7 @@
 	<meta name="keywords" content="Anime, Streaming, Online, No Ads" />
 </svelte:head>
 
-<div class="verSwiper max-h-[93vh] overflow-hidden">
+<div class="verSwiper h-full overflow-hidden">
 	<div class="swiper-wrapper">
 		<div class="swiper-slide">
 			<RecentSection {recent} {recent_page} />
