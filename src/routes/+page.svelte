@@ -7,7 +7,6 @@
 	import MoviesSection from "./movies-section.svelte";
 	import { onMount } from "svelte";
 	import Swiper from "swiper";
-	import { Keyboard, Mousewheel, Navigation, Pagination, Scrollbar } from "swiper/modules";
 	import { VERTICAL_CONFIG } from "$lib/swiper.config";
 
 	export let data: IMainPage;

@@ -5,7 +5,8 @@ export const swiperClass = {
 	MOVIES: "horSwiperMov",
 	POPULAR: "horSwiperPop",
 	RECENT: "horSwiperRec",
-	TOP: "horSwiperTop"
+	TOP: "horSwiperTop",
+	GENRE: "horSwiperGen"
 };
 
 export const HORIZONTAL_CONFIG: SwiperOptions = {

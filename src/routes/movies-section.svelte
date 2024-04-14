@@ -6,7 +6,6 @@
 	import type { Writable } from "svelte/store";
 	import { onMount } from "svelte";
 	import Swiper from "swiper";
-	import { Keyboard, Mousewheel, Navigation, Pagination, Scrollbar } from "swiper/modules";
 	import Reels from "$lib/reels.svelte";
 	import { HORIZONTAL_CONFIG, swiperClass } from "$lib/swiper.config";
 

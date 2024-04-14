@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, ButtonGroup, Spinner } from "flowbite-svelte";
+	import { Button, Spinner } from "flowbite-svelte";
 	import EpsCard from "./eps-card.svelte";
 	import type { IAnimeResult, ISearch } from "@consumet/extensions";
 	import type { Writable } from "svelte/store";
