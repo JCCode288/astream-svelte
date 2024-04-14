@@ -41,7 +41,7 @@
 <div class="flex h-full flex-col justify-between">
 	<h2 class="mx-8 mt-8 text-4xl font-bold text-red-700">Searching: {query}</h2>
 
-	<div class="relative flex h-full flex-col justify-center align-middle">
+	<div class="relative flex h-full w-svw flex-col justify-center align-middle">
 		<Reels />
 		<div class={swiperClass.SEARCH}>
 			<div class="swiper-wrapper">

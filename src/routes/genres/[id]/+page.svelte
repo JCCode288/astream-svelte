@@ -50,7 +50,7 @@
 	<meta name="keywords" content="anime, genre, {title}" />
 </svelte:head>
 
-<div class="flex h-full flex-col justify-between">
+<div class="flex h-full w-svw flex-col justify-between">
 	<h2 class="mx-8 mt-8 text-4xl font-bold text-red-700">Genre {title}</h2>
 
 	<div class="relative flex h-fit flex-col">
