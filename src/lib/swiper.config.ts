@@ -51,7 +51,7 @@ export const VERTICAL_CONFIG: SwiperOptions = {
 	pagination: {
 		el: ".swiper-pagination-vertical",
 		clickable: true,
-		type: "fraction"
+		type: "progressbar"
 	},
 	navigation: {
 		nextEl: ".swiper-button-next-ver",
