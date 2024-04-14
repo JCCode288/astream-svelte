@@ -1,6 +1,13 @@
 import { Pagination, Navigation, Mousewheel, Keyboard } from "swiper/modules";
 import type { SwiperOptions } from "swiper/types";
 
+export const swiperClass = {
+	MOVIES: "horSwiperMov",
+	POPULAR: "horSwiperPop",
+	RECENT: "horSwiperRec",
+	TOP: "horSwiperTop"
+};
+
 export const HORIZONTAL_CONFIG: SwiperOptions = {
 	direction: "horizontal",
 	spaceBetween: 10,

@@ -8,27 +8,36 @@
 	import Swiper from "swiper";
 	import { Keyboard, Mousewheel, Navigation, Pagination, Scrollbar } from "swiper/modules";
 	import Reels from "$lib/reels.svelte";
-	import { HORIZONTAL_CONFIG } from "$lib/swiper.config";
+	import { HORIZONTAL_CONFIG, swiperClass } from "$lib/swiper.config";
 
 	export let movies: Writable<ISearch<IAnimeResult>>;
 	export let movies_page: Writable<number>;
 
 	$: loading = false;
 
+	const slideToReset = () => {
+		if (document) {
+			((document.querySelector("." + swiperClass.MOVIES) as any)?.swiper as Swiper).slideTo(0);
+		}
+	};
 	const handleNextMovies = async () => {
 		loading = true;
 		movies_page.update((val) => val + 1);
 		await handleUpdate({ data_var: movies, page_var: movies_page, url: "?/movies" });
 		loading = false;
+
+		slideToReset();
 	};
 	const handlePrevMovies = async () => {
 		loading = true;
 		movies_page.update((val) => (val > 1 ? val - 1 : 1));
 		await handleUpdate({ data_var: movies, page_var: movies_page, url: "?/movies" });
 		loading = false;
+
+		slideToReset();
 	};
 	onMount(() => {
-		var horizontal_swiper = new Swiper(".horSwiper", HORIZONTAL_CONFIG);
+		var horizontal_swiper = new Swiper("." + swiperClass.MOVIES, HORIZONTAL_CONFIG);
 	});
 </script>
 
@@ -37,7 +46,7 @@
 
 	<div class="relative flex h-full flex-col justify-center align-middle">
 		<Reels />
-		<div class="horSwiper">
+		<div class={swiperClass.MOVIES}>
 			<div class="swiper-wrapper">
 				{#each $movies.results as anime}
 					<div

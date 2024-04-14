@@ -8,28 +8,37 @@
 	import Swiper from "swiper";
 	import { Keyboard, Mousewheel, Navigation, Pagination, Scrollbar } from "swiper/modules";
 	import Reels from "$lib/reels.svelte";
-	import { HORIZONTAL_CONFIG } from "$lib/swiper.config";
+	import { HORIZONTAL_CONFIG, swiperClass } from "$lib/swiper.config";
 
 	export let popular: Writable<ISearch<IAnimeResult>>;
 	export let popular_page: Writable<number>;
 
 	$: loading = false;
 
+	const slideToReset = () => {
+		if (document) {
+			((document.querySelector("." + swiperClass.POPULAR) as any)?.swiper as Swiper).slideTo(0);
+		}
+	};
 	const handleNextPopular = async () => {
 		loading = true;
 		popular_page.update((val) => val + 1);
 		await handleUpdate({ data_var: popular, page_var: popular_page, url: "?/popular" });
 		loading = false;
+
+		slideToReset();
 	};
 	const handlePrevPopular = async () => {
 		loading = true;
 		popular_page.update((val) => (val > 1 ? val - 1 : 1));
 		await handleUpdate({ data_var: popular, page_var: popular_page, url: "?/popular" });
 		loading = false;
+
+		slideToReset();
 	};
 
 	onMount(() => {
-		var horizontal_swiper = new Swiper(".horSwiper", HORIZONTAL_CONFIG);
+		var horizontal_swiper = new Swiper("." + swiperClass.POPULAR, HORIZONTAL_CONFIG);
 	});
 </script>
 
@@ -38,7 +47,7 @@
 
 	<div class="relative flex h-full flex-col justify-center align-middle">
 		<Reels />
-		<div class="horSwiper">
+		<div class={swiperClass.POPULAR}>
 			<div class="swiper-wrapper">
 				{#each $popular.results as anime}
 					<div
