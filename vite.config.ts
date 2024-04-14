@@ -8,7 +8,10 @@ export default defineConfig({
 		SvelteKitPWA({
 			strategies: "generateSW",
 			devOptions: { enabled: true },
-			registerType: "autoUpdate"
+			registerType: "autoUpdate",
+			kit: {
+				outDir: ".vercel"
+			}
 		})
 	]
 });
