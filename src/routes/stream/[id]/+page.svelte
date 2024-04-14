@@ -2,12 +2,34 @@
 	import { ButtonGroup, GradientButton } from "flowbite-svelte";
 	import Player from "./Player.svelte";
 	import { page } from "$app/stores";
+	import { goto } from "$app/navigation";
 
 	export let data;
 
 	$: sourcesData = data.sourcesData;
 	$: prevUrl = `/stream/${btoa(data.prev?.id ?? $page.params.id)}`;
 	$: nextUrl = `/stream/${btoa(data.next?.id ?? $page.params.id)}`;
+	$: loading = false;
+
+	const handleNextEps = async () => {
+		loading = true;
+		if (!data.next) {
+			loading = false;
+			return;
+		}
+		await goto(nextUrl, { replaceState: true });
+		loading = false;
+	};
+	const handlePrevEps = async () => {
+		loading = true;
+		if (!data.prev) {
+			loading = false;
+			return;
+		}
+
+		await goto(prevUrl, { replaceState: true });
+		loading = false;
+	};
 </script>
 
 <svelte:head>
@@ -25,14 +47,25 @@
 			{data.anime.title} Episode {data.curEps}
 		</h1>
 	</div>
-	<Player {sourcesData} />
+
+	{#key sourcesData}
+		<Player {sourcesData} />
+	{/key}
+
 	<div class="flex w-full justify-center whitespace-break-spaces text-wrap">
 		<ButtonGroup>
-			<GradientButton disabled={data.prev ? false : true} href={prevUrl} outline color="tealToLime"
-				>Previous Episode</GradientButton
+			<GradientButton
+				disabled={data.prev ? false : true}
+				on:click={handlePrevEps}
+				outline
+				color="tealToLime">{loading ? "loading...." : "Previous Episode"}</GradientButton
 			>
-			<GradientButton disabled={data.next ? false : true} href={nextUrl} outline color="tealToLime"
-				>Next Episode</GradientButton
+			<GradientButton
+				disabled={data.next ? false : true}
+				on:click={handleNextEps}
+				href={nextUrl}
+				outline
+				color="tealToLime">{loading ? "loading...." : "Next Episode"}</GradientButton
 			>
 		</ButtonGroup>
 	</div>

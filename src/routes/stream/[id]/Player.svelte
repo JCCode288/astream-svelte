@@ -4,12 +4,14 @@
 	import { generateOpts } from "../../../utils/video-player..config";
 	import Artplayer from "artplayer";
 	import type { IGenerateOpts } from "$lib/interfaces/video.interface";
-	import { Video } from "flowbite-svelte";
 
 	export let sourcesData: Omit<IGenerateOpts, "div">;
 
 	let streamDiv: HTMLDivElement;
 	let art: Artplayer;
+
+	$: sourcesData;
+	$: art;
 
 	onMount(async () => {
 		if (browser) {
