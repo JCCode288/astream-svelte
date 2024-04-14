@@ -28,7 +28,7 @@
 
 <BottomNav
 	{activeUrl}
-	position="relative"
+	position="sticky"
 	classInner="flex justify-center bottom-0"
 	classActive="font-bold text-green-500 hover:text-green-900 dark:hover:text-green-700 dark:text-green-300"
 >
