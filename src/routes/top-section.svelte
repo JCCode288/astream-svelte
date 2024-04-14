@@ -10,6 +10,7 @@
 	import Reels from "$lib/reels.svelte";
 	import { HORIZONTAL_CONFIG, swiperClass } from "$lib/swiper.config";
 
+
 	export let top: Writable<ISearch<IAnimeResult>>;
 	export let top_page: Writable<number>;
 
@@ -20,6 +21,7 @@
 			((document.querySelector("." + swiperClass.TOP) as any)?.swiper as Swiper).slideTo(0);
 		}
 	};
+
 	const handleNextTop = async () => {
 		loading = true;
 		top_page.update((val) => val + 1);

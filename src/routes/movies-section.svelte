@@ -9,6 +9,7 @@
 	import Reels from "$lib/reels.svelte";
 	import { HORIZONTAL_CONFIG, swiperClass } from "$lib/swiper.config";
 
+
 	export let movies: Writable<ISearch<IAnimeResult>>;
 	export let movies_page: Writable<number>;
 
@@ -19,6 +20,7 @@
 			((document.querySelector("." + swiperClass.MOVIES) as any)?.swiper as Swiper).slideTo(0);
 		}
 	};
+
 	const handleNextMovies = async () => {
 		loading = true;
 		movies_page.update((val) => val + 1);
