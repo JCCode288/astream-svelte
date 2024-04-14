@@ -163,6 +163,7 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 
 			return animeInfo;
 		} catch (err) {
+			console.log(err);
 			throw new Error(`failed to fetch anime info: ${err}`);
 		}
 	};
@@ -234,7 +235,7 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 
 			return await this.fetchEpisodeSources(serverUrl.href, server);
 		} catch (err) {
-			console.log(err);
+			console.log(err.response.status);
 			throw new Error("Episode not found.");
 		}
 	};
