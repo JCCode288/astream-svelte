@@ -40,7 +40,7 @@
 			</p>
 		</div>
 		<Hr />
-		<div class="grid max-h-[35vh] grid-cols-3 gap-x-2 gap-y-4">
+		<div class="grid max-h-[35svh] grid-cols-3 gap-x-2 gap-y-4">
 			{#each episodes as eps}
 				<a href={"/stream/" + btoa(eps.id)}>
 					<GradientButton class="w-full whitespace-break-spaces"

@@ -11,7 +11,7 @@
 </script>
 
 <div class="h-screen max-w-[100%] overflow-hidden">
-	<div class="flex h-[93vh]">
+	<div class="flex h-[93svh]">
 		<slot />
 	</div>
 	<Navbar />
