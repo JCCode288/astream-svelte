@@ -5,8 +5,6 @@
 
 	export let data;
 
-	console.log(data, "<<< Stream data");
-
 	$: sourcesData = data.sourcesData;
 	$: prevUrl = `/stream/${btoa(data.prev?.id ?? $page.params.id)}`;
 	$: nextUrl = `/stream/${btoa(data.next?.id ?? $page.params.id)}`;

@@ -38,8 +38,6 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 
 		const epsIdx = epsNum ? anime.episodes?.findIndex((anime) => anime.number === epsNum) : null;
 
-		console.log({ eps: anime.episodes, curNum: epsNum, epsIdx });
-
 		if (anime.episodes && epsIdx !== null && epsIdx !== undefined) {
 			stream.next = anime.episodes[epsIdx + 1];
 			stream.prev = anime.episodes[epsIdx - 1];
