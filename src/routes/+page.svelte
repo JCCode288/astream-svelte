@@ -7,7 +7,6 @@
 	import MoviesSection from "./movies-section.svelte";
 	import { onMount } from "svelte";
 	import Swiper from "swiper";
-	import { Keyboard, Mousewheel, Navigation, Pagination, Scrollbar } from "swiper/modules";
 	import { VERTICAL_CONFIG } from "$lib/swiper.config";
 
 	export let data: IMainPage;
@@ -49,7 +48,7 @@
 	<meta name="keywords" content="Anime, Streaming, Online, No Ads" />
 </svelte:head>
 
-<div class="verSwiper max-h-[90vh] overflow-hidden">
+<div class="verSwiper h-full overflow-hidden">
 	<div class="swiper-wrapper">
 		<div class="swiper-slide">
 			<RecentSection {recent} {recent_page} />

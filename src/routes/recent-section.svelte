@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, ButtonGroup, Spinner } from "flowbite-svelte";
+	import { Button, Spinner } from "flowbite-svelte";
 	import EpsCard from "./eps-card.svelte";
 	import type { IAnimeResult, ISearch } from "@consumet/extensions";
 	import type { Writable } from "svelte/store";
@@ -7,28 +7,38 @@
 	import { onMount } from "svelte";
 	import Swiper from "swiper";
 	import Reels from "$lib/reels.svelte";
-	import { HORIZONTAL_CONFIG } from "$lib/swiper.config";
+	import { HORIZONTAL_CONFIG, swiperClass } from "$lib/swiper.config";
 
 	export let recent: Writable<ISearch<IAnimeResult>>;
 	export let recent_page: Writable<number>;
 
 	$: loading = false;
 
+	const slideToReset = () => {
+		if (document) {
+			((document.querySelector("." + swiperClass.RECENT) as any)?.swiper as Swiper).slideTo(0);
+		}
+	};
+
 	const handleNextRecent = async () => {
 		loading = true;
 		recent_page.update((val) => val + 1);
 		await handleUpdate({ data_var: recent, page_var: recent_page, url: "?/recent" });
 		loading = false;
+
+		slideToReset();
 	};
 	const handlePrevRecent = async () => {
 		loading = true;
 		recent_page.update((val) => (val > 1 ? val - 1 : 1));
 		await handleUpdate({ data_var: recent, page_var: recent_page, url: "?/recent" });
 		loading = false;
+
+		slideToReset();
 	};
 
 	onMount(() => {
-		var horizontal_swiper = new Swiper(".horSwiper", HORIZONTAL_CONFIG);
+		var horizontal_swiper = new Swiper("." + swiperClass.RECENT, HORIZONTAL_CONFIG);
 	});
 </script>
 
@@ -37,7 +47,7 @@
 
 	<div class="relative flex h-fit flex-col justify-center align-middle">
 		<Reels />
-		<div class="horSwiper">
+		<div class={swiperClass.RECENT}>
 			<div class="swiper-wrapper">
 				{#each $recent.results as anime}
 					<div

@@ -10,7 +10,9 @@
 	});
 </script>
 
-<div class="h-screen max-w-[100%] overflow-x-hidden">
-	<slot />
+<div class="h-screen max-w-[100%] overflow-hidden">
+	<div class="flex h-[93vh]">
+		<slot />
+	</div>
+	<Navbar />
 </div>
-<Navbar />

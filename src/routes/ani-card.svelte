@@ -5,7 +5,7 @@
 
 	export let anime: IAnimeResult;
 
-	$: detailUrl = `detail/${anime.id}`;
+	$: detailUrl = `/detail/${anime.id}`;
 	$: animeTitle = anime.title.toString();
 </script>
 
