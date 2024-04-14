@@ -6,7 +6,8 @@ export const swiperClass = {
 	POPULAR: "horSwiperPop",
 	RECENT: "horSwiperRec",
 	TOP: "horSwiperTop",
-	GENRE: "horSwiperGen"
+	GENRE: "horSwiperGen",
+	SEARCH: "searchSwiperHor"
 };
 
 export const HORIZONTAL_CONFIG: SwiperOptions = {

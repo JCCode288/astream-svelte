@@ -11,7 +11,10 @@
 <svelte:head>
 	<title>Anime Detail - {data.title}</title>
 	<meta name="description" content={data.description} />
-	<meta name="keywords" content={`${data.title}, ${data.genres?.join(", ")}, ${data.rating}`} />
+	<meta
+		name="keywords"
+		content={`${data.title.toString()}, ${data.genres?.join(", ")}, ${data.rating}`}
+	/>
 </svelte:head>
 
 <div
