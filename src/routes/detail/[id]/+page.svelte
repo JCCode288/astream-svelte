@@ -25,9 +25,9 @@
 			{data.title}
 		</h1>
 		<h2>{data.status}</h2>
-		<div class="flex gap-1">
+		<div class="flex flex-wrap gap-1">
 			{#each genres as genre}
-				<a href="/genres/{genre}">
+				<a href="/genres/{genre.toLowerCase().replaceAll(' ', '-')}">
 					<Badge border color="green">{genre}</Badge>
 				</a>
 			{/each}
