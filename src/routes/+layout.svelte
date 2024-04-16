@@ -6,11 +6,15 @@
 	import "swiper/css/bundle";
 	import { afterNavigate, beforeNavigate } from "$app/navigation";
 	import Loading from "$lib/loading.svelte";
+	import { inject } from "@vercel/analytics";
+	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
 
 	$: route_loading = false;
 
 	onMount(() => {
 		register();
+		inject();
+		injectSpeedInsights();
 	});
 
 	beforeNavigate(() => (route_loading = true));

@@ -43,6 +43,8 @@
 	"dependencies": {
 		"@consumet/extensions": "^1.5.6",
 		"@sveltejs/adapter-vercel": "^5.2.0",
+		"@vercel/analytics": "^1.2.2",
+		"@vercel/speed-insights": "^1.0.10",
 		"artplayer": "^5.1.1",
 		"axios": "^1.6.8",
 		"hls.js": "^1.5.8",
