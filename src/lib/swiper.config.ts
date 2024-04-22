@@ -1,4 +1,11 @@
-import { Pagination, Navigation, Mousewheel, Keyboard } from "swiper/modules";
+import {
+	Pagination,
+	Parallax,
+	Navigation,
+	Mousewheel,
+	Keyboard,
+	EffectCoverflow
+} from "swiper/modules";
 import type { SwiperOptions } from "swiper/types";
 
 export const swiperClass = {
@@ -33,7 +40,7 @@ export const HORIZONTAL_CONFIG: SwiperOptions = {
 	},
 	mousewheel: { forceToAxis: true, enabled: true },
 	keyboard: true,
-	modules: [Navigation, Mousewheel, Keyboard],
+	modules: [Navigation, Mousewheel, Keyboard, Parallax],
 
 	navigation: {
 		nextEl: ".swiper-button-next-hor",
@@ -48,11 +55,12 @@ export const VERTICAL_CONFIG: SwiperOptions = {
 	slidesPerView: 1,
 	mousewheel: { forceToAxis: true, enabled: true },
 	keyboard: true,
-	modules: [Pagination, Navigation, Mousewheel, Keyboard],
+	effect: "coverflow",
+	modules: [Pagination, Parallax, Navigation, Mousewheel, Keyboard, EffectCoverflow],
 	pagination: {
 		el: ".swiper-pagination-vertical",
 		clickable: true,
-		type: "bullets"
+		type: "progressbar"
 	},
 	navigation: {
 		nextEl: ".swiper-button-next-ver",

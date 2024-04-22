@@ -43,9 +43,15 @@
 </script>
 
 <svelte:head>
-	<title>Astreamline - streaming online</title>
-	<meta name="description" content="Streaming anime online with no ads" />
-	<meta name="keywords" content="Anime, Streaming, Online, No Ads" />
+	<title>Astreamline - Streaming online</title>
+	<meta
+		name="description"
+		content="Watch anime streaming online with no ads. Find your favorite anime in this website. Enjoy ad-free anime streaming online on our platform! Dive into a world of captivating stories and vibrant characters without interruptions. Watch your favorite anime series in high definition, anytime, anywhere"
+	/>
+	<meta
+		name="keywords"
+		content="no ads, Anime, streaming, ad-free, online, watch, series, high definition, no ads, binge-worthy, vibrant characters, captivating stories, entertainment"
+	/>
 </svelte:head>
 
 <div class="verSwiper h-full overflow-hidden">

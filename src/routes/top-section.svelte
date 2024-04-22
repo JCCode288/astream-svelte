@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Spinner } from "flowbite-svelte";
+	import { Button, Hr, Spinner } from "flowbite-svelte";
 	import AniCard from "./ani-card.svelte";
 	import { handleUpdate } from "../utils/data.update";
 	import type { IAnimeResult, ISearch } from "@consumet/extensions";
@@ -41,8 +41,10 @@
 </script>
 
 <div class="flex h-full flex-col justify-between">
-	<h2 class="mx-8 mt-8 text-4xl font-bold text-red-700">Top Animes</h2>
-
+	<div class="flex flex-col">
+		<h2 class="mx-8 mb-4 mt-8 text-4xl font-bold text-red-700">Top Animes</h2>
+		<Hr hrClass="w-[97%] h-1 bg-orange-800" />
+	</div>
 	<div class="relative flex h-full flex-col justify-center align-middle">
 		<Reels />
 		<div class={swiperClass.TOP}>
