@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Spinner } from "flowbite-svelte";
+	import { Button, Hr, Spinner } from "flowbite-svelte";
 	import EpsCard from "./eps-card.svelte";
 	import type { IAnimeResult, ISearch } from "@consumet/extensions";
 	import type { Writable } from "svelte/store";
@@ -43,7 +43,11 @@
 </script>
 
 <div class="flex h-full flex-col justify-between">
-	<h2 class="mx-8 mt-8 text-4xl font-bold text-red-700">Recent Animes</h2>
+	<div class="flex flex-col">
+		<h2 class="mx-8 mb-4 mt-8 text-4xl font-bold text-red-700">Recent Animes</h2>
+
+		<Hr hrClass="w-[97%] h-1 bg-orange-800" />
+	</div>
 
 	<div class="relative flex h-fit flex-col justify-center align-middle">
 		<Reels />

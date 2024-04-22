@@ -9,11 +9,11 @@
 </script>
 
 <svelte:head>
-	<title>Anime Detail - {data.title}</title>
-	<meta name="description" content={data.description} />
+	<title>Astreamline | {data.title}</title>
+	<meta name="description" content={`Watch ${data.title}: ${data.description}`} />
 	<meta
 		name="keywords"
-		content={`${data.title.toString()}, ${data.genres?.join(", ")}, ${data.rating}`}
+		content={`${data.title.toString()}, ${data.genres?.join(", ")}, ${data.rating}, no ads, Anime, streaming, ad-free, online, watch, series, high definition, no ads, binge-worthy, vibrant characters, captivating stories, entertainment`}
 	/>
 </svelte:head>
 

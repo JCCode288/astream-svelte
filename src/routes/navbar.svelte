@@ -7,22 +7,28 @@
 	import { BottomNav, BottomNavItem, Popover } from "flowbite-svelte";
 
 	$: activeUrl = $page.url.pathname;
+	$: previousActive = "";
 
 	const debouncer = debounce(300);
 
-	const handleSearch = (ev: Event) => {
-		const debouncing = (e: Event) =>
-			debouncer(() => {
-				const value = (e.target as HTMLInputElement)?.value;
+	const handleSearch = (e: Event) => {
+		debouncer(() => {
+			const value = (e.target as HTMLInputElement)?.value;
 
-				return goto("/search?q=" + value, { keepFocus: true });
-			});
+			return goto("/search?q=" + value, { keepFocus: true });
+		});
+	};
 
-		ev.target?.addEventListener("keypress", debouncing);
+	const handleFocusSearch = (state: "active" | "deact") => {
+		if (state === "active") {
+			previousActive = activeUrl;
+			activeUrl = "#search";
 
-		return () => {
-			ev.target?.removeEventListener("keypress", debouncing);
-		};
+			return;
+		}
+
+		activeUrl = previousActive;
+		return;
 	};
 </script>
 
@@ -38,10 +44,17 @@
 	<BottomNavItem btnName="Genres" href="/genres">
 		<ListMusicSolid />
 	</BottomNavItem>
-	<BottomNavItem class="relative max-w-sm cursor-none md:block" btnName="Search">
+	<BottomNavItem class="relative max-w-sm cursor-none md:block" btnName="Search" href="#search">
 		<SearchOutline />
 		<Popover>
-			<Input on:focus={handleSearch} id="search-navbar" class="ps-5" placeholder="Search Animes" />
+			<Input
+				on:input={handleSearch}
+				on:focus={() => handleFocusSearch("active")}
+				on:blur={() => handleFocusSearch("deact")}
+				id="search-navbar"
+				class="ps-5"
+				placeholder="Search Animes"
+			/>
 		</Popover>
 	</BottomNavItem>
 </BottomNav>
