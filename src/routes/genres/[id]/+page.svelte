@@ -45,7 +45,7 @@
 </script>
 
 <svelte:head>
-	<title>Astreamline anime genre - {title}</title>
+	<title>Astreamline | Genre | {title}</title>
 	<meta name="description" content="All anime list from genre {title}" />
 	<meta name="keywords" content="{title}, genre, " />
 </svelte:head>

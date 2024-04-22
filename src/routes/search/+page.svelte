@@ -38,6 +38,15 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Astreamline | Search | {query}</title>
+	<meta name="description" content="Searching animes with query of {query}" />
+	<meta
+		name="keywords"
+		content="no ads, Anime, streaming, ad-free, online, watch, series, high definition, no ads, binge-worthy, vibrant characters, captivating stories, entertainment, search, list"
+	/>
+</svelte:head>
+
 <div class="flex h-full flex-col justify-between">
 	<h2 class="mx-8 mt-8 text-4xl font-bold text-red-700">Searching: {query}</h2>
 
