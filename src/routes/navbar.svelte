@@ -38,10 +38,10 @@
 	classInner="flex justify-center bottom-0"
 	classActive="font-bold text-green-500 hover:text-green-900 dark:hover:text-green-700 dark:text-green-300"
 >
-	<BottomNavItem btnName="Home" href="/">
+	<BottomNavItem data-sveltekit-preload-code="eager" btnName="Home" href="/">
 		<HomeSolid />
 	</BottomNavItem>
-	<BottomNavItem btnName="Genres" href="/genres">
+	<BottomNavItem data-sveltekit-preload-code="eager" btnName="Genres" href="/genres">
 		<ListMusicSolid />
 	</BottomNavItem>
 	<BottomNavItem class="relative max-w-sm cursor-none md:block" btnName="Search" href="#search">
