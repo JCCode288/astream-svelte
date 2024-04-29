@@ -14,6 +14,7 @@
 	padding="none"
 	size="xs"
 	class="flex h-[60svh] justify-between rounded-md bg-secondary-200 md:h-[47svh]"
+	data-sveltekit-preload-code="eager"
 >
 	<div class="flex flex-col justify-center gap-3 px-5 py-2 align-middle">
 		<a href={detailUrl}>

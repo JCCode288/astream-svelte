@@ -13,8 +13,10 @@
 
 	onMount(() => {
 		register();
-		inject();
-		injectSpeedInsights();
+		if (process.env.NODE_ENV === "production") {
+			inject();
+			injectSpeedInsights();
+		}
 	});
 
 	beforeNavigate(() => (route_loading = true));
