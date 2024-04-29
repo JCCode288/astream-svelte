@@ -63,7 +63,10 @@
 		<Reels />
 	</div>
 
-	<div class="relative bottom-8 flex w-screen justify-center gap-2 text-nowrap">
+	<div
+		class="relative bottom-8 flex w-screen justify-center gap-2 text-nowrap"
+		data-sveltekit-preload-code="eager"
+	>
 		<Button disabled={$movies_page > 1 ? false : true} on:click={() => handlePrevMovies()}>
 			{#if loading}
 				<Spinner class="me-3 w-12" size="5" color="white">Loading...</Spinner>

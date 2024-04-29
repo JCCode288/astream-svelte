@@ -5,6 +5,6 @@
 	export let genre: IGenreAnime;
 </script>
 
-<a href="/genres/{genre.id}">
+<a href="/genres/{genre.id}" data-sveltekit-preload-code="eager">
 	<Button color="green">{genre.title}</Button>
 </a>
