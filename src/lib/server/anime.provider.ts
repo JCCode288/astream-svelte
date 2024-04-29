@@ -1,4 +1,4 @@
-import type { IAnimeInfo, IAnimeResult, ISearch } from "@consumet/extensions/dist/models";
+import type { IAnimeInfo, IAnimeResult, ISearch, ISource } from "@consumet/extensions/dist/models";
 import { type IProviderStrategy } from "../interfaces/provider.strategy";
 import type { IMainPage, IGenreAnime, IStream, IMainQuery } from "../interfaces/provider.interface";
 import type Gogoanime from "@consumet/extensions/dist/providers/anime/gogoanime";
@@ -48,7 +48,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		const topAni = await this.provider.fetchTopAiring(page);
 		if (!topAni) throw new Error("No top animes");
 
-		await this.cacheProvider.set(key, topAni, 300);
+		await this.cacheProvider.set(key, topAni, 3600);
 
 		return topAni;
 	}
@@ -61,7 +61,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		const popularAni = await this.provider.fetchPopular(page);
 		if (!popularAni) throw new Error("No popular animes");
 
-		await this.cacheProvider.set(key, popularAni, 300);
+		await this.cacheProvider.set(key, popularAni, 3600);
 
 		return popularAni;
 	}
@@ -74,7 +74,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		const moviesAni = await this.provider.fetchRecentMovies(page);
 		if (!moviesAni) throw new Error("No movies animes");
 
-		await this.cacheProvider.set(key, moviesAni, 300);
+		await this.cacheProvider.set(key, moviesAni, 3600);
 
 		return moviesAni;
 	}
@@ -108,17 +108,27 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		return genres;
 	}
 	async stream(episodeId: string): Promise<IStream> {
-		const { animeId, epsNum } = animeExtractor(episodeId) ?? { animeId: "noanime", epsNum: null };
+		const extracted = animeExtractor(episodeId);
+		let animeId = extracted?.animeId;
+		let epsNum = extracted?.epsNum;
+
+		if (!animeId || !epsNum) {
+			animeId = await this.provider.fetchAnimeIdFromEpisodeId(episodeId);
+
+			const splittedEps = episodeId.split("-");
+			epsNum = +splittedEps[splittedEps.length - 1];
+		}
 
 		const key = cache.STREAM + episodeId;
-		const data = await this.cacheProvider.get<IStream>(key);
+		const cached = await Promise.all([this.cacheProvider.get<ISource>(key), this.detail(animeId)]);
+		let source = cached[0];
+		const anime = cached[1];
 
-		if (data) return data;
+		if (!source) {
+			source = await this.provider.fetchEpisodeSources(episodeId);
+			await this.cacheProvider.set(key, source, 604800); //1 week
+		}
 
-		const [source, anime] = await Promise.all([
-			this.provider.fetchEpisodeSources(episodeId),
-			this.provider.fetchAnimeInfo(animeId)
-		]);
 		const stream: IStream = { ...source, anime, curEps: epsNum };
 
 		const epsIdx = epsNum ? anime.episodes?.findIndex((anime) => anime.number === epsNum) : null;
@@ -129,8 +139,6 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		}
 
 		if (!stream) throw new Error("Stream data invalid");
-
-		await this.cacheProvider.set(key, stream, 604800); //1 week
 
 		return stream;
 	}
