@@ -14,6 +14,7 @@ import {
 import { GogoCDN, StreamSB } from "@consumet/extensions/dist/extractors";
 import { USER_AGENT } from "@consumet/extensions/dist/utils";
 import type { IError } from "../../interfaces/error.interface";
+import type { AxiosError } from "axios";
 
 export class ConsumetGogo extends ANIME.Gogoanime {
 	constructor() {
@@ -235,7 +236,7 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 
 			return await this.fetchEpisodeSources(serverUrl.href, server);
 		} catch (err) {
-			console.log(err.response.status);
+			console.log((err as AxiosError).response?.data);
 			throw new Error("Episode not found.");
 		}
 	};

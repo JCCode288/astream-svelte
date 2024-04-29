@@ -3,32 +3,117 @@ import { type IProviderStrategy } from "../interfaces/provider.strategy";
 import type { IMainPage, IGenreAnime, IStream, IMainQuery } from "../interfaces/provider.interface";
 import type Gogoanime from "@consumet/extensions/dist/providers/anime/gogoanime";
 import { animeExtractor } from "../../utils/anime-id.extractor";
+import { cache } from "../../utils/cache.constant";
+import type { ICacheStrategy } from "$lib/interfaces/cache.strategy";
+import { MemoryCache } from "./cache/base.instance";
 
 export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
-	constructor(private readonly provider: T) {}
+	constructor(
+		private readonly provider: T,
+		private readonly cacheProvider: ICacheStrategy = new MemoryCache()
+	) {}
+
 	async genre(genre: string, page: number = 1): Promise<ISearch<IAnimeResult>> {
-		return await this.provider.fetchGenreInfo(genre, page);
+		const key = cache.GENRES + genre + "/" + page;
+		const data = await this.cacheProvider.get<ISearch<IAnimeResult>>(key);
+
+		if (data) return data;
+
+		const fetchedGenre = await this.provider.fetchGenreInfo(genre, page);
+		if (!fetchedGenre) throw new Error("No genre available");
+
+		await this.cacheProvider.set(key, fetchedGenre, 3600);
+
+		return fetchedGenre;
 	}
 	async recent(page: number = 1): Promise<ISearch<IAnimeResult>> {
-		return await this.provider.fetchRecentEpisodes(page);
+		const key = cache.RECENT + page;
+		const data = await this.cacheProvider.get<ISearch<IAnimeResult>>(key);
+
+		if (data) return data;
+
+		const recentAni = await this.provider.fetchRecentEpisodes(page);
+		if (!recentAni) throw new Error("No recent animes");
+
+		await this.cacheProvider.set(key, recentAni, 300);
+
+		return recentAni;
 	}
 	async top(page: number = 1): Promise<ISearch<IAnimeResult>> {
-		return await this.provider.fetchTopAiring(page);
+		const key = cache.TOP + page;
+		const data = await this.cacheProvider.get<ISearch<IAnimeResult>>(key);
+
+		if (data) return data;
+
+		const topAni = await this.provider.fetchTopAiring(page);
+		if (!topAni) throw new Error("No top animes");
+
+		await this.cacheProvider.set(key, topAni, 300);
+
+		return topAni;
 	}
 	async popular(page: number = 1): Promise<ISearch<IAnimeResult>> {
-		return await this.provider.fetchPopular(page);
+		const key = cache.POPULAR + page;
+		const data = await this.cacheProvider.get<ISearch<IAnimeResult>>(key);
+
+		if (data) return data;
+
+		const popularAni = await this.provider.fetchPopular(page);
+		if (!popularAni) throw new Error("No popular animes");
+
+		await this.cacheProvider.set(key, popularAni, 300);
+
+		return popularAni;
+	}
+	async movies(page: number = 1) {
+		const key = cache.MOVIES + page;
+		const data = await this.cacheProvider.get<ISearch<IAnimeResult>>(key);
+
+		if (data) return data;
+
+		const moviesAni = await this.provider.fetchRecentMovies(page);
+		if (!moviesAni) throw new Error("No movies animes");
+
+		await this.cacheProvider.set(key, moviesAni, 300);
+
+		return moviesAni;
 	}
 	async detail(animeId: string): Promise<IAnimeInfo> {
-		return await this.provider.fetchAnimeInfo(animeId);
+		const key = cache.DETAIL + animeId;
+		const data = await this.cacheProvider.get<IAnimeInfo>(key);
+
+		if (data) return data;
+
+		const detailAni = await this.provider.fetchAnimeInfo(animeId);
+		if (!detailAni) throw new Error("No detail animes");
+
+		await this.cacheProvider.set(key, detailAni, 300);
+
+		return detailAni;
 	}
 	async search(query: string, page: number = 1): Promise<ISearch<IAnimeResult>> {
 		return await this.provider.search(query, page);
 	}
 	async allGenres(): Promise<IGenreAnime[]> {
-		return await this.provider.fetchGenreList();
+		const key = cache.GENRES;
+		const data = await this.cacheProvider.get<IGenreAnime[]>(key);
+
+		if (data) return data;
+
+		const genres = await this.provider.fetchGenreList();
+		if (!genres) throw new Error("No Genres");
+
+		await this.cacheProvider.set(key, genres, 3600);
+
+		return genres;
 	}
 	async stream(episodeId: string): Promise<IStream> {
 		const { animeId, epsNum } = animeExtractor(episodeId) ?? { animeId: "noanime", epsNum: null };
+
+		const key = cache.STREAM + episodeId;
+		const data = await this.cacheProvider.get<IStream>(key);
+
+		if (data) return data;
 
 		const [source, anime] = await Promise.all([
 			this.provider.fetchEpisodeSources(episodeId),
@@ -43,18 +128,19 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 			stream.prev = anime.episodes[epsIdx - 1];
 		}
 
+		if (!stream) throw new Error("Stream data invalid");
+
+		await this.cacheProvider.set(key, stream, 604800); //1 week
+
 		return stream;
-	}
-	async movies(page: number = 1) {
-		return await this.provider.fetchRecentMovies(page);
 	}
 
 	async main(query?: IMainQuery): Promise<IMainPage> {
 		const [recent, top, popular, movies] = await Promise.all([
-			this.provider.fetchRecentEpisodes(query?.recent),
-			this.provider.fetchTopAiring(query?.top),
-			this.provider.fetchPopular(query?.popular),
-			this.provider.fetchRecentMovies(query?.movies)
+			this.recent(query?.recent),
+			this.top(query?.top),
+			this.popular(query?.popular),
+			this.movies(query?.movies)
 		]);
 
 		return {
