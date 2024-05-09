@@ -8,6 +8,7 @@
 	import Loading from "$lib/loading.svelte";
 	import { inject } from "@vercel/analytics";
 	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
+	import Maintenance from "$lib/maintenance.svelte";
 
 	$: route_loading = false;
 
@@ -28,7 +29,8 @@
 		<Loading />
 	{:else}
 		<div class="flex h-[93svh]">
-			<slot />
+			<!-- <slot /> -->
+			<Maintenance />
 		</div>
 	{/if}
 	<div class="relative bottom-0">
