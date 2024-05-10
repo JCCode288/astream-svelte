@@ -20,7 +20,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		if (data) return data;
 
 		const fetchedGenre = await this.provider.fetchGenreInfo(genre, page);
-		if (!fetchedGenre) throw new Error("No genre available");
+		if (!fetchedGenre || !fetchedGenre.results.length) throw new Error("No genre available");
 
 		await this.cacheProvider.set(key, fetchedGenre, 3600);
 
@@ -33,7 +33,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		if (data) return data;
 
 		const recentAni = await this.provider.fetchRecentEpisodes(page);
-		if (!recentAni) throw new Error("No recent animes");
+		if (!recentAni || !recentAni.results.length) throw new Error("No recent animes");
 
 		await this.cacheProvider.set(key, recentAni, 300);
 
@@ -59,7 +59,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		if (data) return data;
 
 		const popularAni = await this.provider.fetchPopular(page);
-		if (!popularAni) throw new Error("No popular animes");
+		if (!popularAni || !popularAni.results.length) throw new Error("No popular animes");
 
 		await this.cacheProvider.set(key, popularAni, 3600);
 
@@ -72,7 +72,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		if (data) return data;
 
 		const moviesAni = await this.provider.fetchRecentMovies(page);
-		if (!moviesAni) throw new Error("No movies animes");
+		if (!moviesAni || !moviesAni.results.length) throw new Error("No movies animes");
 
 		await this.cacheProvider.set(key, moviesAni, 3600);
 
@@ -101,7 +101,7 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		if (data) return data;
 
 		const genres = await this.provider.fetchGenreList();
-		if (!genres) throw new Error("No Genres");
+		if (!genres || !genres.length) throw new Error("No Genres");
 
 		await this.cacheProvider.set(key, genres, 3600);
 

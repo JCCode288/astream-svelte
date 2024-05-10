@@ -14,14 +14,13 @@ import {
 import { GogoCDN, StreamSB } from "@consumet/extensions/dist/extractors";
 import { USER_AGENT } from "@consumet/extensions/dist/utils";
 import type { IError } from "../../interfaces/error.interface";
-import type { AxiosError } from "axios";
 
 export class ConsumetGogo extends ANIME.Gogoanime {
 	constructor() {
 		super();
 	}
 
-	protected override baseUrl: string = "http://anitaku.so";
+	protected override baseUrl: string = "https://ww5.gogoanimes.fi";
 	override readonly name = "Gogoanime";
 	protected override logo =
 		"https://play-lh.googleusercontent.com/MaGEiAEhNHAJXcXKzqTNgxqRmhuKB1rCUgb15UrN_mWUNRnLpO5T1qja64oRasO7mn0";
@@ -178,7 +177,18 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 		episodeId: string,
 		server: StreamingServers = StreamingServers.VidStreaming
 	): Promise<ISource> => {
-		if (episodeId.startsWith("http")) {
+		try {
+			const servers = await this.fetchEpisodeServers(episodeId);
+
+			episodeId =
+				servers.find((el) => {
+					const name = el.name.toLowerCase().replace(" ", "");
+
+					return name === server;
+				})?.url ?? "";
+
+			if (!episodeId) throw new Error("Server URL not found");
+
 			const serverUrl = new URL(episodeId);
 			switch (server) {
 				case StreamingServers.GogoCDN:
@@ -204,39 +214,7 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 						download: `https://gogohd.net/download${serverUrl.search}`
 					};
 			}
-		}
-
-		try {
-			const res = await this.client.get(`${this.baseUrl}/${episodeId}`);
-
-			const $ = load(res.data);
-
-			let serverUrl: URL;
-
-			switch (server) {
-				case StreamingServers.GogoCDN:
-					serverUrl = new URL(`${$("#load_anime > div > div > iframe").attr("src")}`);
-					break;
-				case StreamingServers.VidStreaming:
-					serverUrl = new URL(
-						`${$("div.anime_video_body > div.anime_muti_link > ul > li.vidcdn > a").attr("data-video")}`
-					);
-					break;
-				case StreamingServers.StreamSB:
-					serverUrl = new URL(
-						$("div.anime_video_body > div.anime_muti_link > ul > li.streamsb > a").attr(
-							"data-video"
-						)!
-					);
-					break;
-				default:
-					serverUrl = new URL(`${$("#load_anime > div > div > iframe").attr("src")}`);
-					break;
-			}
-
-			return await this.fetchEpisodeSources(serverUrl.href, server);
 		} catch (err) {
-			console.log((err as AxiosError).response?.data);
 			throw new Error("Episode not found.");
 		}
 	};
@@ -308,16 +286,28 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 
 			const recentEpisodes: IAnimeResult[] = [];
 
-			$("div.last_episodes.loaddub > ul > li").each((i, el) => {
+			$("div.last_episodes.loaddub > ul > li").each((i, el): void => {
 				if (el) {
-					recentEpisodes.push({
-						id: $(el).find("a").attr("href")?.split("/")[1].split("-episode")[0] ?? "",
-						episodeId: $(el).find("a").attr("href")?.split("/")[1] ?? "",
-						episodeNumber: parseFloat($(el).find("p.episode").text().replace("Episode ", "")),
-						title: $(el).find("p.name > a").attr("title")!,
-						image: $(el).find("div > a > img").attr("src"),
-						url: `${this.baseUrl}${$(el).find("a").attr("href")?.trim()}`
-					});
+					const id = $(el).find("a").attr("href")?.split("/")[1].split("-episode")[0] ?? "";
+					const episodeId = $(el).find("a").attr("href")?.split("/")[1] ?? "";
+					const episodeNumber = parseFloat($(el).find("p.episode").text().replace("Episode ", ""));
+					const title = $(el).find("p.name > a").attr("title")!;
+					let image = $(el).find("div > a > img").attr("src");
+					const url = `${this.baseUrl}/${$(el).find("a").attr("href")?.trim()}`;
+
+					if (image?.startsWith("https://gogocdn.net")) {
+						image = image.replace("https://gogocdn.net", this.baseUrl);
+					}
+					const data = {
+						id,
+						episodeId,
+						episodeNumber,
+						title,
+						image,
+						url
+					};
+
+					recentEpisodes.push(data);
 				}
 			});
 

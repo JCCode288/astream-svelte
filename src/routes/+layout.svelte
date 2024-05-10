@@ -29,8 +29,8 @@
 		<Loading />
 	{:else}
 		<div class="flex h-[93svh]">
-			<!-- <slot /> -->
-			<Maintenance />
+			<slot />
+			<!-- <Maintenance /> -->
 		</div>
 	{/if}
 	<div class="relative bottom-0">
