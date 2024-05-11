@@ -255,8 +255,6 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 				servers.push(this.getDefault($));
 			}
 
-			console.log(servers);
-
 			return servers;
 		} catch (err) {
 			throw new Error("Episode not found.");
