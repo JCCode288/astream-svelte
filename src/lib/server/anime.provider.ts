@@ -130,15 +130,14 @@ export class AnimeProvider<T extends Gogoanime> implements IProviderStrategy {
 		}
 
 		const stream: IStream = { ...source, anime, curEps: epsNum };
+		if (!stream) throw new Error("Stream data invalid");
 
 		const epsIdx = epsNum ? anime.episodes?.findIndex((anime) => anime.number === epsNum) : null;
 
-		if (anime.episodes && epsIdx !== null && epsIdx !== undefined) {
+		if (anime.episodes && epsIdx) {
 			stream.next = anime.episodes[epsIdx + 1];
 			stream.prev = anime.episodes[epsIdx - 1];
 		}
-
-		if (!stream) throw new Error("Stream data invalid");
 
 		return stream;
 	}

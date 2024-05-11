@@ -14,13 +14,16 @@ import {
 import { GogoCDN, StreamSB } from "@consumet/extensions/dist/extractors";
 import { USER_AGENT } from "@consumet/extensions/dist/utils";
 import type { IError } from "../../interfaces/error.interface";
+import type { CheerioAPI } from "cheerio";
+import { animeExtractor } from "../../utils/anime-id.extractor";
 
 export class ConsumetGogo extends ANIME.Gogoanime {
 	constructor() {
 		super();
 	}
 
-	protected override baseUrl: string = "https://ww5.gogoanimes.fi";
+	protected override baseUrl = "https://ww5.gogoanimes.fi" as const;
+	private readonly sourceUrl = "https://ww4.gogoanime2.org";
 	override readonly name = "Gogoanime";
 	protected override logo =
 		"https://play-lh.googleusercontent.com/MaGEiAEhNHAJXcXKzqTNgxqRmhuKB1rCUgb15UrN_mWUNRnLpO5T1qja64oRasO7mn0";
@@ -225,7 +228,12 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 	 */
 	override fetchEpisodeServers = async (episodeId: string): Promise<IEpisodeServer[]> => {
 		try {
-			if (!episodeId.startsWith(this.baseUrl)) episodeId = `${this.baseUrl}/${episodeId}`;
+			const id = animeExtractor(episodeId);
+
+			if (!id) throw new Error("Episode not Found");
+
+			if (!episodeId.startsWith(this.baseUrl))
+				episodeId = `${this.sourceUrl}/watch/${id.animeId}/${id.epsNum}`;
 
 			const res = await this.client.get(episodeId);
 
@@ -243,11 +251,30 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 				});
 			});
 
+			if (!servers.length) {
+				servers.push(this.getDefault($));
+			}
+
+			console.log(servers);
+
 			return servers;
 		} catch (err) {
 			throw new Error("Episode not found.");
 		}
 	};
+
+	/**
+	 *
+	 * @param data fetched cheerio API
+	 * @returns default episode server with name as vidstreaming
+	 */
+	getDefault(data: CheerioAPI): IEpisodeServer {
+		const url = data("#playerframe").attr("src");
+		if (!url) throw new Error("Episode not found.");
+
+		return { name: StreamingServers.VidStreaming, url };
+	}
+
 	/**
 	 *
 	 * @param episodeId episode link or episode id
