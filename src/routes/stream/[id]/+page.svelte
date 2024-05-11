@@ -13,16 +13,17 @@
 
 	const handleNextEps = async () => {
 		loading = true;
-		if (!data.next) {
+		if (!data.next?.id) {
 			loading = false;
 			return;
 		}
+
 		await goto(nextUrl, { replaceState: true });
 		loading = false;
 	};
 	const handlePrevEps = async () => {
 		loading = true;
-		if (!data.prev) {
+		if (!data.prev?.id) {
 			loading = false;
 			return;
 		}
@@ -63,7 +64,6 @@
 			<GradientButton
 				disabled={data.next ? false : true}
 				on:click={handleNextEps}
-				href={nextUrl}
 				outline
 				color="tealToLime">{loading ? "loading...." : "Next Episode"}</GradientButton
 			>
