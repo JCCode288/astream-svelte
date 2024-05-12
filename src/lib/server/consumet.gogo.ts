@@ -310,12 +310,9 @@ export class ConsumetGogo extends ANIME.Gogoanime {
 					const episodeId = $(el).find("a").attr("href")?.split("/")[1] ?? "";
 					const episodeNumber = parseFloat($(el).find("p.episode").text().replace("Episode ", ""));
 					const title = $(el).find("p.name > a").attr("title")!;
-					let image = $(el).find("div > a > img").attr("src");
+					const image = $(el).find("div > a > img").attr("src");
 					const url = `${this.baseUrl}/${$(el).find("a").attr("href")?.trim()}`;
 
-					if (image?.startsWith("https://gogocdn.net")) {
-						image = image.replace("https://gogocdn.net", this.baseUrl);
-					}
 					const data = {
 						id,
 						episodeId,
